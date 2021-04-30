@@ -31,4 +31,9 @@ class Address extends Model
         return $this->belongsTo(City::class);
     }
 
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
 }

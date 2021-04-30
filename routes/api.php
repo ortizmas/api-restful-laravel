@@ -27,5 +27,6 @@ Route::apiResource('states', StateController::class);
 Route::apiResource('cities', CityController::class);
 Route::apiResource('addresses', AddressController::class);
 Route::get('get-total-users-by-city', [AddressController::class, 'getTotalUsersByCity']);
+Route::get('get-total-users-by-state', [AddressController::class, 'getTotalUsersByState']);
 
 //Route::apiResource('cities',[CityController::class]);

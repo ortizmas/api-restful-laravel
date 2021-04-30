@@ -34,22 +34,37 @@ class AddressController extends Controller
      */
     public function getTotalUsersByCity()
     {
-        // $address = Address::all()->load('city')->groupBy('city_id');
+        $collection = collect(Address::all()->load('city'));
+        $totalUserByCities = $collection->totalUserByCitiesBy('city_id')->map(
+            function ($row) {
+                return [
+                    'city' => $row[0]->city->name,
+                    'total_users' => $row->count()
+                ];
+            }
+        );
 
-        // $data = [];
-        // foreach ($address as $key => $value) {
-        //     $data[] = ['city' => $value[0]->city->name,  'total_users' => $value->count()];
-        // }
-        // return response()->json([
-        //     'city' => $data
-        // ]);
+        return response(new AddressResource($totalUserByCities));
+    }
 
-        $address = DB::table('addresses')
-            ->select('city_id', DB::raw('count(*) as total'))
-            ->groupBy('city_id')
-            ->get();
+    /**
+     * Get total registered users by city
+     *
+     * @return void
+     */
+    public function getTotalUsersByState()
+    {
+        $collection = collect(Address::all()->load('city'));
+        $totalUserByState = $collection->totalUserByStateBy('state_id')->map(
+            function ($row) {
+                return [
+                    'state' => $row[0]->state->name,
+                    'total_users' => $row->count()
+                ];
+            }
+        );
 
-        dd($address);
+        return response(new AddressResource($totalUserByState));
     }
 
     /**

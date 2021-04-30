@@ -20,10 +20,11 @@ class CreateAddressesTable extends Migration
             $table->integer('number')->nullable();
             $table->string('district')->nullable(); // Bairro
             $table->string('additional')->nullable(); // Complement
-
+            $table->unsignedBigInteger('state_id');
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('user_id');
 
+            $table->foreign('state_id')->references('id')->on('states');
             $table->foreign('city_id')->references('id')->on('cities');
             $table->foreign('user_id')->references('id')->on('users');
 
