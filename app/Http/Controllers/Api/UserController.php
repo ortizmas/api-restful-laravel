@@ -55,11 +55,13 @@ class UserController extends Controller
         $data_address = $request->except('name', 'email', 'password');
         $address = Address::create($data_address);
 
-        return response([
-            'user' => new UserResource($user),
-            'address' => new AddressResource($address),
-            'message' => 'Dados cadastrados com sucesso!!'
-        ], 201);
+        return response(
+            [
+                'user' => new UserResource($user),
+                'address' => new AddressResource($address),
+                'message' => 'Dados cadastrados com sucesso!!'
+            ], 201
+        );
     }
 
     /**

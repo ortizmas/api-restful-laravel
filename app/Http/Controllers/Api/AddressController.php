@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\City;
+use App\Models\User;
 use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,14 +31,14 @@ class AddressController extends Controller
      *
      * @return void
      */
-    public function getTotalUsersByCity($cityId)
+    public function getTotalUsersByCity()
     {
-        $addresses = Address::where('city_id', $cityId)->get()->load('user');
 
-        return response([
-            'totalUsers' => $addresses,
-            'message' => 'Successful!!'
-        ], 200);
+        $address = Address::withCount('city', 'user')->with('city', 'user')
+            ->get()->groupBy('city_id');
+        
+        dd($address);
+        
     }
 
     /**
