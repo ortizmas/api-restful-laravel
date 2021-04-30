@@ -6,6 +6,7 @@ use App\Models\City;
 use App\Models\User;
 use App\Models\Address;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AddressResource;
 
@@ -33,12 +34,22 @@ class AddressController extends Controller
      */
     public function getTotalUsersByCity()
     {
+        // $address = Address::all()->load('city')->groupBy('city_id');
 
-        $address = Address::withCount('city', 'user')->with('city', 'user')
-            ->get()->groupBy('city_id');
-        
+        // $data = [];
+        // foreach ($address as $key => $value) {
+        //     $data[] = ['city' => $value[0]->city->name,  'total_users' => $value->count()];
+        // }
+        // return response()->json([
+        //     'city' => $data
+        // ]);
+
+        $address = DB::table('addresses')
+            ->select('city_id', DB::raw('count(*) as total'))
+            ->groupBy('city_id')
+            ->get();
+
         dd($address);
-        
     }
 
     /**
