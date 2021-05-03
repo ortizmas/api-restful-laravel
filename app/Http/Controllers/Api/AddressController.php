@@ -35,7 +35,7 @@ class AddressController extends Controller
     public function getTotalUsersByCity()
     {
         $collection = collect(Address::all()->load('city'));
-        $totalUserByCities = $collection->totalUserByCitiesBy('city_id')->map(
+        $totalUserByCities = $collection->groupBy('city_id')->map(
             function ($row) {
                 return [
                     'city' => $row[0]->city->name,
@@ -55,7 +55,7 @@ class AddressController extends Controller
     public function getTotalUsersByState()
     {
         $collection = collect(Address::all()->load('city'));
-        $totalUserByState = $collection->totalUserByStateBy('state_id')->map(
+        $totalUserByState = $collection->groupBy('state_id')->map(
             function ($row) {
                 return [
                     'state' => $row[0]->state->name,
