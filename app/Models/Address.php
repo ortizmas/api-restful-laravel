@@ -18,7 +18,8 @@ class Address extends Model
         'district',
         'additional',
         'city_id',
-        'user_id'
+        'user_id',
+        'state_id'
     ];
 
     public function user()
